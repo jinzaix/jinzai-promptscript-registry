@@ -52,9 +52,9 @@
     description: "Run fmt, clippy, and tests"
     content: "Run: cargo run -p jinzai-cli -- check"
   }
-  "/smoke-dev": {
+  "/smoke-staging": {
     prompt: true
-    description: "Run dev smoke test against local or deployed API"
-    content: "Run: cargo run -p jinzai-cli -- smoke dev --base-url http://127.0.0.1:8787"
+    description: "Run staging smoke test against local or deployed API"
+    content: "Run: cargo run -p jinzai-cli -- smoke staging --base-url http://127.0.0.1:8787"
   }
 }
