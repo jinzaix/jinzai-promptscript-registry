@@ -1,0 +1,27 @@
+@meta {
+  id: "jinzai-documentation"
+  syntax: "1.0.0"
+}
+
+@standards {
+  diataxis: [
+    "Tutorials go in docs/tutorials/ — learning-oriented, step-by-step",
+    "How-to guides go in docs/how-to/ — problem-oriented procedures",
+    "Reference goes in docs/reference/ — neutral, complete facts",
+    "Explanation goes in docs/explanation/ — understanding-oriented context",
+    "Never mix multiple Diátaxis types in one document",
+    "Use lowercase hyphenated filenames (e.g. local-dev.md)",
+    "Always update docs/README.md when adding or moving documentation"
+  ]
+  content: [
+    "Start with clear purpose statement and prerequisites",
+    "Include Related Documentation section with working links",
+    "Update docs when code behavior changes",
+    "Verify code snippets and examples before documenting"
+  ]
+}
+
+@restrictions {
+  - "Never create orphaned documentation without index links"
+  - "Never write vague or generic documentation"
+}

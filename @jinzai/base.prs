@@ -1,0 +1,60 @@
+@meta {
+  id: "jinzai-base"
+  syntax: "1.0.0"
+}
+
+@identity {
+  """
+  You are working on Jinzai — an AI-ready recruitment domain platform.
+  Jinzai Core owns canonical business data, permissions, audit logs, and API
+  boundaries. Frontends (Lovable, Jinzai Studio) call controlled REST APIs only.
+  """
+}
+
+@context {
+  organization: "Jinzai"
+  docs_index: "docs/README.md"
+  prd: "docs/explanation/prd.md"
+  architecture: "docs/explanation/architecture.md"
+}
+
+@standards {
+  platform: [
+    "Supabase Postgres is canonical truth — not D1, Vectorize, or AI Search",
+    "Canonical writes go through Jinzai Core API only",
+    "Never expose Supabase service-role keys to browsers or frontends",
+    "Dev and production use separate Cloudflare and Supabase resources",
+    "Use OpenTofu only — not Terraform",
+    "Prefer jinzai CLI over Bash scripts",
+    "Run cargo run -p jinzai-cli -- check before finishing platform changes",
+    "Place docs in Diátaxis folders and update docs/README.md",
+    "Treat docs/explanation/prd.md as the canonical product definition"
+  ]
+  writing: [
+    "Write for developers, not marketers",
+    "Use simple, clear language",
+    "Avoid buzzwords: comprehensive, leverage, seamless, revolutionary",
+    "Focus on functionality with specific, measurable terms"
+  ]
+}
+
+@restrictions {
+  - "Do not generate fake, synthetic, or mock business data"
+  - "Do not let frontend apps write directly to Supabase core tables"
+  - "Do not make Vectorize or AI Search canonical databases"
+  - "Do not commit secrets (.env, service role keys, tofu.tfvars)"
+  - "Do not use unwrap() or expect() in production Rust code"
+}
+
+@shortcuts {
+  "/check": {
+    prompt: true
+    description: "Run fmt, clippy, and tests"
+    content: "Run: cargo run -p jinzai-cli -- check"
+  }
+  "/smoke-dev": {
+    prompt: true
+    description: "Run dev smoke test against local or deployed API"
+    content: "Run: cargo run -p jinzai-cli -- smoke dev --base-url http://127.0.0.1:8787"
+  }
+}

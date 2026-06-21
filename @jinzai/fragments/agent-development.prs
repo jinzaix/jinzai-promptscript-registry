@@ -1,0 +1,21 @@
+@meta {
+  id: "jinzai-agent-development"
+  syntax: "1.0.0"
+}
+
+@standards {
+  agents: [
+    "Use jinzai CLI for operations — not large Bash scripts",
+    "Run cargo run -p jinzai-cli -- check before finishing",
+    "Keep changes small and focused to the requested task",
+    "Update docs when behavior changes",
+    "Use Cloudflare and Supabase MCP tools when relevant"
+  ]
+}
+
+@restrictions {
+  - "Never commit secrets"
+  - "Never add new canonical data stores — Postgres remains truth"
+  - "Never make Vectorize or AI Search canonical databases"
+  - "Never create large Bash scripts — use jinzai CLI wrappers"
+}

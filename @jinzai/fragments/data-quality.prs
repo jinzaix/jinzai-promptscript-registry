@@ -1,0 +1,40 @@
+@meta {
+  id: "jinzai-data-quality"
+  syntax: "1.0.0"
+}
+
+@standards {
+  data_quality: [
+    "Assign quality scores (0-100) to all data entries",
+    "Track data source reliability and freshness",
+    "Flag incomplete or estimated data",
+    "Validate data against official sources",
+    "Never return data without quality indicators"
+  ]
+  real_data: [
+    "Use real data from official Japanese government sources (NTA, gBizINFO, EDINET)",
+    "Clearly mark data as missing if not available from real sources",
+    "Mark fields as NULL/None when real data is not available",
+    "Never use random number generators for business data"
+  ]
+  japanese_validation: [
+    "Validate corporate numbers (13 digits)",
+    "Validate postal codes (123-4567 format)",
+    "Validate prefecture codes against official list",
+    "Validate industry codes (JSIC format)",
+    "Normalize company names — remove extra whitespace"
+  ]
+  financial: [
+    "Normalize to JPY; use consistent fiscal year (YYYY)",
+    "Validate currency amounts are positive",
+    "Flag estimated vs actual data",
+    "Never mix different currencies without conversion"
+  ]
+}
+
+@restrictions {
+  - "Never generate fake representative names, financial data, or employee counts"
+  - "Never accept invalid corporate numbers"
+  - "Never store unvalidated data"
+  - "Never silently ignore data validation errors"
+}

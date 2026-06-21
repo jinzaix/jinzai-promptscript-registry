@@ -1,0 +1,32 @@
+@meta {
+  id: "jinzai-security-compliance"
+  syntax: "1.0.0"
+}
+
+@standards {
+  security: [
+    "Use HTTPS for all communications",
+    "Validate all input parameters",
+    "Implement rate limiting per API key",
+    "Encrypt data at rest (AES-256) and in transit (TLS 1.3)",
+    "Never expose internal system details in error messages",
+    "Log security events; maintain audit trails for data access"
+  ]
+  japan_pii: [
+    "Comply with Japanese Personal Information Protection Act",
+    "Obtain explicit consent for personal data collection",
+    "Implement data deletion upon request",
+    "Collect only necessary personal data"
+  ]
+  secrets: [
+    "Never store passwords or service role keys in plain text",
+    "Never commit secrets to git or OpenTofu state when avoidable",
+    "Use Wrangler secrets or GitHub Actions secrets for runtime credentials"
+  ]
+}
+
+@restrictions {
+  - "Never process personal data without legal basis"
+  - "Never bypass Supabase Row Level Security policies"
+  - "Never share sensitive data without proper authorization"
+}

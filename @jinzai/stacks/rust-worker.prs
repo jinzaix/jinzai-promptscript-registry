@@ -1,0 +1,40 @@
+@meta {
+  id: "jinzai-rust-worker"
+  syntax: "1.0.0"
+}
+
+@inherit @jinzai/base
+
+@context {
+  languages: [rust]
+  runtime: "Cloudflare Workers (workers-rs)"
+  build: "cargo workspace"
+  cli: "jinzai-cli"
+}
+
+@standards {
+  rust: [
+    "Use cargo for project management",
+    "Organize code into logical modules; lib.rs for libraries, main.rs for binaries",
+    "Use Result<T, E> with thiserror for fallible operations",
+    "Use async/await for I/O; never block the async runtime",
+    "Use Arc<T> for shared ownership where needed",
+    "Write tests before or alongside behavior (TDD)",
+    "Place unit tests in src/ with #[cfg(test)]; integration tests in tests/"
+  ]
+  api: [
+    "REST/JSON is the external API format: { ok, data } or { ok, error }",
+    "Use stable error codes: VALIDATION_ERROR, NOT_FOUND, CONFLICT, UPSTREAM_ERROR, INTERNAL_ERROR",
+    "gRPC/protobuf is for internal future services only"
+  ]
+  worker: [
+    "D1 holds app-local drafts and generated-app state only",
+    "Supabase RPC for transactional canonical writes",
+    "Call core.approve_job_intake via service role from Worker — never from browser"
+  ]
+}
+
+@restrictions {
+  - "Do not use Kubernetes, Kafka, or premature microservices in v1"
+  - "Do not move canonical recruitment data fully to D1"
+}

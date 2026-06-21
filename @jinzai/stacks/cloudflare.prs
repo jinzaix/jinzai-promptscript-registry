@@ -1,0 +1,46 @@
+@meta {
+  id: "jinzai-cloudflare"
+  syntax: "1.0.0"
+}
+
+@inherit @jinzai/base
+
+@context {
+  platform: "Cloudflare"
+  worker_dev: "jinzai-api-dev"
+  worker_prod: "jinzai-api"
+  d1_dev: "jinzai_app_dev"
+  d1_prod: "jinzai_app_prod"
+  api_dev: "api-dev.jinz.ai"
+  api_prod: "api.jinz.ai"
+}
+
+@standards {
+  storage: [
+    "Postgres says: what is true?",
+    "D1 says: what is this app working on?",
+    "R2 says: where is the file?",
+    "Vectorize says: what is semantically similar?",
+    "AI Search says: what does our knowledge corpus say?"
+  ]
+  vectorize: [
+    "Vectorize entries are derived indexes, not source of truth",
+    "Every Vectorize record must include tenant_id",
+    "All Vectorize queries must filter by tenant_id",
+    "Resolve Vectorize result IDs through Postgres before returning business data"
+  ]
+  ai_search: [
+    "AI Search is for document/knowledge retrieval, not transactional recruitment data",
+    "Raw documents belong in R2; metadata in Postgres; AI Search indexes derived chunks"
+  ]
+  ops: [
+    "Use wrangler for Worker deploy, D1 migrations, and secrets",
+    "Set runtime secrets via wrangler secret put or workers/api-rs/.dev.vars locally",
+    "Use Cloudflare MCP servers (bindings, docs, builds) when available"
+  ]
+}
+
+@restrictions {
+  - "Do not fake working Vectorize or AI Search implementations — use documented placeholders"
+  - "Do not share dev/prod D1, R2, Vectorize, or AI Search resources"
+}

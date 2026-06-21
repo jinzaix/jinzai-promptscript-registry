@@ -1,0 +1,96 @@
+version: '1'
+
+meta:
+  name: 'Jinzai PromptScript Registry'
+  description: 'Shared AI instruction standards for Jinzai projects'
+  lastUpdated: '2026-06-21'
+
+namespaces:
+  '@jinzai':
+    description: 'Universal Jinzai foundation'
+    priority: 100
+  '@jinzai/stacks':
+    description: 'Tech stack configurations'
+    priority: 80
+  '@jinzai/fragments':
+    description: 'Reusable rule fragments'
+    priority: 70
+
+catalog:
+  - id: '@jinzai/base'
+    path: '@jinzai/base.prs'
+    name: 'Jinzai Base'
+    description: 'Platform rules, docs map, writing standards'
+    tags: [jinzai, foundation, platform]
+    targets: [github, claude, cursor]
+    dependencies: []
+    detectionHints:
+      always: true
+
+  - id: '@jinzai/stacks/rust-worker'
+    path: '@jinzai/stacks/rust-worker.prs'
+    name: 'Rust Cloudflare Worker Stack'
+    description: 'Rust workspace, Worker API, TDD, Supabase RPC'
+    tags: [rust, cloudflare, workers, jinzai-core]
+    targets: [github, claude, cursor]
+    dependencies: ['@jinzai/base']
+    detectionHints:
+      files: ['Cargo.toml', 'workers/api-rs/wrangler.toml']
+      languages: [rust]
+
+  - id: '@jinzai/stacks/cloudflare'
+    path: '@jinzai/stacks/cloudflare.prs'
+    name: 'Cloudflare Platform'
+    description: 'D1, R2, Vectorize, AI Search storage roles and ops'
+    tags: [cloudflare, d1, r2, vectorize]
+    targets: [github, claude, cursor]
+    dependencies: ['@jinzai/base']
+    detectionHints:
+      files: ['wrangler.toml']
+
+  - id: '@jinzai/fragments/data-quality'
+    path: '@jinzai/fragments/data-quality.prs'
+    name: 'Data Quality'
+    description: 'Real data only, Japanese validation, quality scoring'
+    tags: [data, quality, japan]
+    targets: [github, claude, cursor]
+    dependencies: ['@jinzai/base']
+    detectionHints:
+      always: true
+
+  - id: '@jinzai/fragments/security-compliance'
+    path: '@jinzai/fragments/security-compliance.prs'
+    name: 'Security & Compliance'
+    description: 'Security standards and Japan PII compliance'
+    tags: [security, compliance, pii]
+    targets: [github, claude, cursor]
+    dependencies: ['@jinzai/base']
+
+  - id: '@jinzai/fragments/documentation'
+    path: '@jinzai/fragments/documentation.prs'
+    name: 'Documentation Standards'
+    description: 'Diátaxis framework and doc maintenance rules'
+    tags: [docs, diataxis]
+    targets: [github, claude, cursor]
+    dependencies: ['@jinzai/base']
+
+  - id: '@jinzai/fragments/agent-development'
+    path: '@jinzai/fragments/agent-development.prs'
+    name: 'Agent Development'
+    description: 'CLI-first workflow for AI agents and CI'
+    tags: [agents, cli]
+    targets: [github, claude, cursor]
+    dependencies: ['@jinzai/base']
+
+suggestionRules:
+  - condition: { always: true }
+    suggest: { inherit: '@jinzai/base', use: ['@jinzai/fragments/data-quality', '@jinzai/fragments/agent-development'] }
+  - condition: { files: ['Cargo.toml'] }
+    suggest:
+      inherit: '@jinzai/stacks/rust-worker'
+      use:
+        - '@jinzai/stacks/cloudflare'
+        - '@jinzai/fragments/security-compliance'
+        - '@jinzai/fragments/documentation'
+  - condition: { files: ['wrangler.toml'] }
+    suggest: { use: ['@jinzai/stacks/cloudflare'] }
